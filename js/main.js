@@ -38,12 +38,30 @@ window.addEventListener("load", () => {
             let priorityCell = document.createElement("td")
     
             nameCell.innerHTML = item.name
-            priceCell.innerHTML = item.price
+            priceCell.innerHTML = "$" + item.price
             priorityCell.innerHTML = item.priority
 
             tableRow.appendChild(nameCell)
             tableRow.appendChild(priceCell)
             tableRow.appendChild(priorityCell)
+
+            switch(item.priority) {
+                case "low":
+                    priorityCell.classList.add("bg-danger")
+                    priorityCell.classList.add("text-white")
+                    break
+                case "medium":
+                    priorityCell.classList.add("bg-warning")
+                    break
+                case "high":
+                    priorityCell.classList.add("bg-success")
+                    priorityCell.classList.add("text-white")
+                    break
+                default:
+                    break
+            }
+
+            priorityCell.classList.add("fw-semibold")
 
             itemTableBody.appendChild(tableRow)
         })
