@@ -13,36 +13,70 @@
     <div id="columnContainer" class="d-flex flex-column justify-content-between">
         <div class="row m-0 p-0 justify-content-center align-items-center">
 
-            <div class="col-md-10 mx-0 my-3 p-3 col-sm-12 alpha-container rounded-4">
+            <div class="col-md-11 col-sm-12 mx-0 my-3 p-3 alpha-container rounded-4">
 
                 <h1 class="text-center fw-bold m-0 pb-3">Budget Organizer</h1>
                 <div class="row m-0 px-0 py-2 justify-content-center align-items-center">
-                    <form action="" method="post" id="itemForm" class="form col-md-7 col-sm-12 alpha-form p-3 my-1 rounded-3">
-                        <label class="form-label mt-0 mb-1" for="name">Item Name</label>
-                        <input required aria-required="true" class="form-control mt-0 mb-3" type="text" name="name" id="name" placeholder="Enter name...">
-                
-                        <label class="form-label mt-0 mb-1" for="price">Price</label>
-                        <div class="row m-0 p-0">
-                            <span class="col-1 m-0 pr-0 mr-0">$</span>
-                            <div class="col-11 m-0 px-0">
-                                <input required aria-required="true" class="form-control mt-0 mb-3" type="number" name="price" step=".01" id="price" value="0.00">
-                            </div>
+                    <div class="col-6 d-flex flex-row justify-content-end">
+                        <div class="d-flex flex-column">
+                            <h5 class="fw-semibold text-end">Starting cash:</h5>
+                            <span class="d-flex flex-row align-items-center justify-content-end">$&nbsp;<input id="starting-cash" type="number" min="0" step="0.01" class="form-control fs-5 w-75" placeholder="0.00"></span>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex flex-row justify-content-start">
+                        <div class="d-flex flex-column">
+                            <h5 class="fw-semibold">Remainder:</h5>
+                            <span id="remainder-wrapper" class="fs-4 fw-semibold my-1 text-danger">$<span class="fw-bold" id="remainder">n/a</span></span>
+                        </div>
+                    </div>
+                    <form action="" method="post" id="itemForm" class="form row d-flex flex-row align-items-center p-3 my-1 rounded-3">
+                        <div class="col-md-3 col-sm-12 d-flex flex-row align-items-center">
+                            <label class="form-label mt-0 mb-3 ml-0 w-25" for="name">Item Name&nbsp;</label>
+                            <input required aria-required="true" class="form-control mt-0 mb-3 w-75" type="text" name="name" id="name" placeholder="Enter name...">
                         </div>
                 
-                        <label class="form-label mt-0 mb-1" for="priority">Priority</label>
-                        <select required aria-required="true" class="form-select mt-0 mb-3" name="priority" id="priority">
-                            <option selected disabled value="">Select priority...</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </select>
+                        <div class="col-md-3 col-sm-12 d-flex flex-row align-items-center">
+                            <label class="form-label mt-0 mb-3 w-25" for="price">Price&nbsp;$</label>
+                            <input required aria-required="true" class="form-control mt-0 mb-3 w-75" type="number" name="price" step=".01" min="0" id="price" placeholder="0.00">
+                        </div>
                 
-                        <input type="submit" class="btn btn-info col-12 fw-bold" value="Add">
+                        <div class="col-md-3 col-sm-12 d-flex flex-row align-items-center">
+                            <label class="form-label mt-0 mb-3 w-25" for="priority">Priority&nbsp;</label>
+                            <select required aria-required="true" class="form-select mt-0 mb-3 w-75" name="priority" id="priority">
+                                <option selected disabled value="">Select priority...</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                
+                        <input type="submit" class="btn btn-info fw-bold col-md-3 col-sm-12 mt-0 mb-3" value="Add">
                     </form>
+
+                    <div class="row g-1 mt-0">
+                        <h5 class="col-12 fw-bold text-center">Spendings by Priority</h5>
+                        <div class="col-4 mb-1 alert alert-danger p-3">
+                            <h6 class="fw-bold text-center text-decoration-underline">Low</h6>
+                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-low">n/a</span></p>
+                        </div>
+                        <div class="col-4 mb-1 alert alert-warning p-3">
+                            <h6 class="fw-bold text-center text-decoration-underline">Medium</h6>
+                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-medium">n/a</span></p>
+                        </div>
+                        <div class="col-4 mb-1 alert alert-success p-3">
+                            <h6 class="fw-bold text-center text-decoration-underline">High</h6>
+                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-high">n/a</span></p>
+                        </div>
+                        <div class="alert alert-primary mt-0 col-12">
+                            <h6 class="fw-bold text-center">Total spendings:</h6>
+                            <p class="fs-4 m-0 fw-bold text-center">$<span id="total-spendings">n/a</span></p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="row m-0 p-0 justify-content-center align-items-center">
-                    <div class="col-8 px-md-3 pb-md-2 p-sm-0 bg-white rounded col-md-10 col-sm-12">
+                    <div class="col-8 px-md-3 pb-md-2 p-sm-0 bg-white rounded col-12">
                         <table class="table my-3 mx-0">
                             <thead>
                                 <th class="col-5">Item</th>
@@ -65,20 +99,21 @@
                 <li class="list-group-item bg-dark text-white">
                     Copyright © Francisco Hernández 2023
                 </li>
-                <li class="list-group-item bg-dark">
-                    <a href="https://github.com/mihaelkyeah">GitHub</a>
-                </li>
-                <li class="list-group-item bg-dark">
-                    <a href="https://linkedin.com/in/francisco-hern%C3%A1ndez-01b1b9216">LinkedIn</a>
+                <li class="list-group-item bg-dark text-white">
+                    <small>
+                        <a href="https://github.com/mihaelkyeah">GitHub</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="https://mihaelkyeah.github.io">Portfolio</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="https://linkedin.com/in/francisco-hern%C3%A1ndez-01b1b9216">LinkedIn</a>
+                    </small>
                 </li>
                 <li class="list-group-item bg-dark text-white">
                     <strong>Resources used:</strong>
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            • <a target="_blank" href="https://getbootstrap.com">Bootstrap Frontend Toolkit</a>
+                            <small>• <a target="_blank" href="https://getbootstrap.com">Bootstrap Frontend Toolkit</a></small>
                         </li>
                         <li class="list-inline-item">
-                            • Gradient background courtesy of <a target="_blank" href="https://www.svgbackgrounds.com/set/free-svg-backgrounds-and-patterns/">SVG Backgrounds</a>
+                            <small>• Gradient background courtesy of <a target="_blank" href="https://www.svgbackgrounds.com/set/free-svg-backgrounds-and-patterns/">SVG Backgrounds</a></small>
                         </li>
                     </ul>
                 </li>
