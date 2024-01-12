@@ -2,9 +2,12 @@
 
 window.addEventListener("load", () => {
 
+    // Starting cash
     let startingCashInput = document.querySelector("#starting-cash")
+    // Remainder
     let remainderWrapper = document.querySelector("#remainder-wrapper")
     let remainderSpan = document.querySelector("#remainder")
+    // Spendings assorted
     let spendingsLowSpan = document.querySelector("#spendings-low")
     let spendingsMediumSpan = document.querySelector("#spendings-medium")
     let spendingsHighSpan = document.querySelector("#spendings-high")
@@ -31,6 +34,13 @@ window.addEventListener("load", () => {
         let priority = document.forms["itemForm"].elements["priority"].value
         saveItem(name, price, priority)
     })
+
+    startingCashInput.addEventListener("keyup", () => {
+        refreshCounters()
+    })
+
+    startingCashInput.value = ""
+    refreshTable()
     
     function saveItem(name, price, priority) {
         /* CREATE JSON */
@@ -67,66 +77,10 @@ window.addEventListener("load", () => {
         itemTableBody.innerHTML = ""
 
         if(items.length === 0) {
-            let th = document.createElement("th")
-            th.setAttribute("colspan", "4")
-
-            let heading = document.createElement("h6")
-            heading.classList.add("text-center")
-            heading.classList.add("text-secondary")
-            heading.classList.add("mt-3")
-            heading.classList.add("mb-0")
-            heading.innerHTML = "No items added yet."
-
-            th.appendChild(heading)
-            itemTableBody.appendChild(th)
+            displayNoItemsMessage()
         }
         else {
-            items.forEach((item) => {
-                let tableRow = document.createElement("tr")
-                let nameCell = document.createElement("td")
-                let priceCell = document.createElement("td")
-                let priorityCell = document.createElement("td")
-                let deleteCell = document.createElement("td")
-                let deleteButton = document.createElement("button")
-        
-                nameCell.innerHTML = item.name
-                priceCell.innerHTML = "$" + item.price
-                priorityCell.innerHTML = item.priority
-
-                deleteCell.classList.add("text-center")
-                deleteButton.classList.add("btn")
-                deleteButton.classList.add("btn-danger")
-                deleteButton.innerHTML = "<i class=\"bi bi-trash-fill\"></i>"
-                deleteButton.addEventListener("click", () => {
-                    deleteItem(item.id)
-                })
-                deleteCell.appendChild(deleteButton)
-
-                tableRow.appendChild(nameCell)
-                tableRow.appendChild(priceCell)
-                tableRow.appendChild(priorityCell)
-                tableRow.appendChild(deleteCell)
-
-                switch(item.priority) {
-                    case "low":
-                        priorityCell.classList.add("bg-danger")
-                        priorityCell.classList.add("text-white")
-                        break
-                    case "medium":
-                        priorityCell.classList.add("bg-warning")
-                        break
-                    case "high":
-                        priorityCell.classList.add("bg-success")
-                        priorityCell.classList.add("text-white")
-                        break
-                    default:
-                        break
-                }
-
-                priorityCell.classList.add("fw-semibold")
-
-                itemTableBody.appendChild(tableRow)
-            })
+            fillTable()
         }
         refreshInputs()
         refreshCounters()
@@ -162,15 +116,113 @@ window.addEventListener("load", () => {
             })
         }
         let remainder = parseFloat(startingCashInput.value) - parseFloat(totalSpendings)
-        totalSpendingsSpan.innerHTML = totalSpendings
-        remainderSpan.innerHTML = remainder
+        remainder = !remainder ? 0-totalSpendings : remainder
+        totalSpendingsSpan.innerHTML = totalSpendings.toFixed(2)
+        remainderSpan.innerHTML = remainder.toFixed(2)
+        changeWrapperClass()
         
-        spendingsLowSpan.innerHTML = spendings.low
-        spendingsMediumSpan.innerHTML = spendings.medium
-        spendingsHighSpan.innerHTML = spendings.high
+        spendingsLowSpan.innerHTML = spendings.low.toFixed(2)
+        spendingsMediumSpan.innerHTML = spendings.medium.toFixed(2)
+        spendingsHighSpan.innerHTML = spendings.high.toFixed(2)
     }
 
-    startingCashInput.value = ""
-    refreshTable()
+    function displayNoItemsMessage() {
+        let th = document.createElement("th")
+        th.setAttribute("colspan", "4")
+
+        let heading = document.createElement("h6")
+        heading.classList.add("text-center")
+        heading.classList.add("text-secondary")
+        heading.classList.add("mt-5")
+        heading.classList.add("mb-4")
+        // heading.classList.add("mb-sm-5")
+        heading.innerHTML = "No items added yet."
+
+        th.appendChild(heading)
+        itemTableBody.appendChild(th)
+    }
+
+    function fillTable() {
+        items.forEach((item) => {
+            let tableRow = document.createElement("tr")
+            let nameCell = document.createElement("td")
+            let priceCell = document.createElement("td")
+            let priorityCell = document.createElement("td")
+            let deleteCell = document.createElement("td")
+            let deleteButton = document.createElement("button")
+    
+            nameCell.innerHTML = item.name
+            priceCell.innerHTML = "$" + parseFloat(item.price).toFixed(2)
+            priorityCell.innerHTML = item.priority
+
+            deleteCell.classList.add("text-center")
+            deleteCell.classList.add("rounded-end")
+
+            deleteButton.classList.add("btn")
+            deleteButton.classList.add("btn-danger")
+            deleteButton.classList.add("m-0")
+            deleteButton.style = "width: 100%; height: 100%; padding: 1ch 0"
+            deleteButton.innerHTML = "<i class=\"bi bi-trash-fill\"></i>"
+            deleteButton.addEventListener("click", () => {
+                deleteItem(item.id)
+            })
+            deleteCell.appendChild(deleteButton)
+
+            tableRow.appendChild(nameCell)
+            tableRow.appendChild(priceCell)
+            tableRow.appendChild(priorityCell)
+            tableRow.appendChild(deleteCell)
+            tableRow.classList.add("rounded-end")
+
+            switch(item.priority) {
+                case "low":
+                        tableRow.classList.add("table-danger")
+                    break
+                case "medium":
+                        tableRow.classList.add("table-warning")
+                    break
+                case "high":
+                        tableRow.classList.add("table-success")
+                    break
+                default:
+                    break
+            }
+            
+            nameCell.classList.add("py-2")
+            nameCell.classList.add("m-0")
+            priceCell.classList.add("py-2")
+            priceCell.classList.add("m-0")
+            priorityCell.classList.add("py-2")
+            priorityCell.classList.add("m-0")
+            deleteCell.classList.add("p-0")
+            deleteCell.classList.add("m-0")
+            priorityCell.classList.add("fw-semibold")
+
+            itemTableBody.appendChild(tableRow)
+        })
+    }
+
+    function changeWrapperClass() {
+        try { remainderWrapper.classList.remove("alert-danger") } catch(e) { console.log(e) }
+        try { remainderWrapper.classList.remove("alert-warning") } catch(e) { console.log(e) }
+        try { remainderWrapper.classList.remove("alert-success") } catch(e) { console.log(e) }
+        try { remainderWrapper.classList.remove("border-5") } catch(e) { console.log(e) }
+        try { remainderWrapper.classList.remove("my-1") } catch(e) { console.log(e) }
+        try { remainderWrapper.classList.remove("mb-1") } catch(e) { console.log(e) }
+        remainderWrapper.classList.add("my-1")
+
+        if(parseFloat(remainderSpan.innerHTML) > (parseFloat(startingCashInput.value) / 2))
+            remainderWrapper.classList.add("alert-success")
+        else if(parseFloat(remainderSpan.innerHTML) > 100)
+            remainderWrapper.classList.add("alert-warning")
+        else {
+            remainderWrapper.classList.add("alert-danger")
+            if(parseFloat(remainderSpan.innerHTML) < 0) {
+                remainderWrapper.classList.add("border-5")
+                remainderWrapper.classList.add("mb-1")
+                remainderWrapper.classList.remove("my-1")
+            }
+        }
+    }
 
 })

@@ -17,19 +17,20 @@
 
                 <h1 class="text-center fw-bold m-0 pb-3">Budget Organizer</h1>
                 <div class="row m-0 px-0 py-2 justify-content-center align-items-center">
-                    <div class="col-6 d-flex flex-row justify-content-end">
-                        <div class="d-flex flex-column">
-                            <h5 class="fw-semibold text-end">Starting cash:</h5>
-                            <span class="d-flex flex-row align-items-center justify-content-end">$&nbsp;<input id="starting-cash" type="number" min="0" step="0.01" class="form-control fs-5 w-75" placeholder="0.00"></span>
+                    <div class="col-md-3 col-sm-6 d-flex flex-row justify-content-end">
+                        <div class="d-flex flex-column w-100">
+                            <h5 class="fw-semibold text-center">Starting cash:</h5>
+                            <span class="d-flex flex-row align-items-center justify-content-end">$&nbsp;<input id="starting-cash" type="number" min="0" step="0.01" class="form-control fs-5 w-100 text-center" placeholder="0.00"></span>
                         </div>
                     </div>
-                    <div class="col-6 d-flex flex-row justify-content-start">
-                        <div class="d-flex flex-column">
-                            <h5 class="fw-semibold">Remainder:</h5>
-                            <span id="remainder-wrapper" class="fs-4 fw-semibold my-1 text-danger">$<span class="fw-bold" id="remainder">n/a</span></span>
+                    <div class="col-md-3 col-sm-6 d-flex flex-row justify-content-start">
+                        <div class="d-flex flex-column w-100">
+                            <h5 class="fw-semibold text-center">Remainder:</h5>
+                            <span id="remainder-wrapper" class="fs-4 fw-semibold my-1 alert alert-danger py-0 px-1 text-center">$<span class="fw-bold" id="remainder">n/a</span></span>
                         </div>
                     </div>
-                    <form action="" method="post" id="itemForm" class="form row d-flex flex-row align-items-center p-3 my-1 rounded-3">
+
+                    <form action="" method="post" id="itemForm" class="form row d-flex flex-row alert alert-warning align-items-center px-3 pt-3 pb-2 my-2 rounded-3">
                         <div class="col-md-3 col-sm-12 d-flex flex-row align-items-center">
                             <label class="form-label mt-0 mb-3 ml-0 w-25" for="name">Item Name&nbsp;</label>
                             <input required aria-required="true" class="form-control mt-0 mb-3 w-75" type="text" name="name" id="name" placeholder="Enter name...">
@@ -53,41 +54,47 @@
                         <input type="submit" class="btn btn-info fw-bold col-md-3 col-sm-12 mt-0 mb-3" value="Add">
                     </form>
 
-                    <div class="row g-1 mt-0">
-                        <h5 class="col-12 fw-bold text-center">Spendings by Priority</h5>
-                        <div class="col-4 mb-1 alert alert-danger p-3">
-                            <h6 class="fw-bold text-center text-decoration-underline">Low</h6>
-                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-low">n/a</span></p>
-                        </div>
-                        <div class="col-4 mb-1 alert alert-warning p-3">
-                            <h6 class="fw-bold text-center text-decoration-underline">Medium</h6>
-                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-medium">n/a</span></p>
-                        </div>
-                        <div class="col-4 mb-1 alert alert-success p-3">
-                            <h6 class="fw-bold text-center text-decoration-underline">High</h6>
-                            <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-high">n/a</span></p>
-                        </div>
-                        <div class="alert alert-primary mt-0 col-12">
-                            <h6 class="fw-bold text-center">Total spendings:</h6>
-                            <p class="fs-4 m-0 fw-bold text-center">$<span id="total-spendings">n/a</span></p>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="row m-0 px-0 py-0 justify-content-center align-items-stretch">
 
-                <div class="row m-0 p-0 justify-content-center align-items-center">
-                    <div class="col-8 px-md-3 pb-md-2 p-sm-0 bg-white rounded col-12">
-                        <table class="table my-3 mx-0">
-                            <thead>
-                                <th class="col-5">Item</th>
-                                <th class="col-3">Price</th>
-                                <th class="col-3">Priority</th>
-                                <th class="col-1"></th>
-                            </thead>
-                            <tbody id="itemTableBody">
-                            </tbody>
-                        </table>
+                    <div class="col-md-6 col-sm-12">
+                        <h5 class="fw-bold text-center">Spendings</h5>
+                        <div class="d-flex flex-row justify-content-between align-items-stretch m-0 p-0 w-100">
+                            <div class="mb-1 alert alert-danger p-3" style="width: 33%">
+                                <h6 class="fw-bold text-center text-decoration-underline">Low</h6>
+                                <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-low">n/a</span></p>
+                            </div>
+                            <div class="mb-1 alert alert-warning p-3" style="width: 33%">
+                                <h6 class="fw-bold text-center text-decoration-underline">Medium</h6>
+                                <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-medium">n/a</span></p>
+                            </div>
+                            <div class="mb-1 alert alert-success p-3" style="width: 33%">
+                                <h6 class="fw-bold text-center text-decoration-underline">High</h6>
+                                <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-high">n/a</span></p>
+                            </div>
+                        </div>
+                        <div class="alert alert-primary mt-0 col-12" style="height: 45%">
+                            <h6 class="fw-bold text-center pt-3">Total spendings:</h6>
+                            <p class="fs-4 m-0 fw-bold text-center pb-3">$<span id="total-spendings">n/a</span></p>
+                        </div>
                     </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <h5 class="fw-bold text-center">Items</h5>
+                        <div class="bg-white rounded-3 px-md-3 pb-md-2 p-sm-0 m-0" style="min-height: 80%">
+                            <table class="table mx-0" style="height: 100%">
+                                <thead>
+                                    <th class="col-5">Item</th>
+                                    <th class="col-3">Price</th>
+                                    <th class="col-3">Priority</th>
+                                    <th class="col-1"></th>
+                                </thead>
+                                <tbody id="itemTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
