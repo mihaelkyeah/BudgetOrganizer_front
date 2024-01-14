@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
         low: 0,
         medium: 0,
         high: 0,
+        total: 0
     }
 
     /* MOCK DATA STRUCTURE BEFORE BACKEND FUNCTIONALITY IS APPLIED */
@@ -36,11 +37,11 @@ window.addEventListener("load", () => {
     })
 
     startingCashInput.addEventListener("keyup", () => {
-        refreshCounters()
+        refreshStatus()
     })
 
     startingCashInput.value = ""
-    refreshTable()
+    refreshStatus()
     
     function saveItem(name, price, priority) {
         /* CREATE JSON */
@@ -56,7 +57,7 @@ window.addEventListener("load", () => {
 
         /* SAVE TO DATA STRUCTURE (ARRAY) */
         items.push(item)
-        refreshTable()
+        refreshStatus()
     }
 
     function deleteItem(id) {
@@ -70,6 +71,13 @@ window.addEventListener("load", () => {
                 found = true
             }
         }
+        refreshStatus()
+    }
+
+    function refreshStatus() {
+        refreshInputs()
+        refreshSpendings()
+        refreshCounters()
         refreshTable()
     }
     
@@ -82,8 +90,6 @@ window.addEventListener("load", () => {
         else {
             fillTable()
         }
-        refreshInputs()
-        refreshCounters()
     }
 
     function refreshInputs() {
@@ -93,13 +99,26 @@ window.addEventListener("load", () => {
     }
 
     function refreshCounters() {
-        let totalSpendings = 0
+        let remainder = parseFloat(startingCashInput.value) - parseFloat(spendings.total)
+        // remainder = !remainder ? (0 - spendings.total) : remainder
+        totalSpendingsSpan.innerHTML = spendings.total.toFixed(2)
+        remainderSpan.innerHTML = remainder.toFixed(2)
+        changeRemainderWrapperClass()
+        
+        spendingsLowSpan.innerHTML = spendings.low.toFixed(2)
+        spendingsMediumSpan.innerHTML = spendings.medium.toFixed(2)
+        spendingsHighSpan.innerHTML = spendings.high.toFixed(2)
+    }
+
+    function refreshSpendings() {
         spendings.low = 0
         spendings.medium = 0
         spendings.high = 0
+        spendings.total = 0
+
         if(items.length > 0) {
             items.forEach((item) => {
-                totalSpendings += parseFloat(item.price)
+                spendings.total += parseFloat(item.price)
                 switch(item.priority) {
                     case "low":
                         spendings.low += parseFloat(item.price)
@@ -115,16 +134,19 @@ window.addEventListener("load", () => {
                 }
             })
         }
-        let remainder = parseFloat(startingCashInput.value) - parseFloat(totalSpendings)
-        remainder = !remainder ? 0-totalSpendings : remainder
-        totalSpendingsSpan.innerHTML = totalSpendings.toFixed(2)
-        remainderSpan.innerHTML = remainder.toFixed(2)
-        changeWrapperClass()
-        
-        spendingsLowSpan.innerHTML = spendings.low.toFixed(2)
-        spendingsMediumSpan.innerHTML = spendings.medium.toFixed(2)
-        spendingsHighSpan.innerHTML = spendings.high.toFixed(2)
     }
+
+    // ALTERNATIVE SOLUTION WITH LESS CODE, BUT LESS PERFORMANT
+    /* 
+    function getSpendingsAmountByPriority(priority) {
+        let returnValue = 0
+        if(items.length > 0)
+            items.forEach((item) => {
+                if(item.priority.toLowerCase() === priority.toLowerCase())
+                    returnValue += parseFloat(item.price)
+            })
+        return returnValue
+    } */
 
     function displayNoItemsMessage() {
         let th = document.createElement("th")
@@ -202,7 +224,7 @@ window.addEventListener("load", () => {
         })
     }
 
-    function changeWrapperClass() {
+    function changeRemainderWrapperClass() {
         try { remainderWrapper.classList.remove("alert-danger") } catch(e) { console.log(e) }
         try { remainderWrapper.classList.remove("alert-warning") } catch(e) { console.log(e) }
         try { remainderWrapper.classList.remove("alert-success") } catch(e) { console.log(e) }
