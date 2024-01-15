@@ -99,15 +99,15 @@ window.addEventListener("load", () => {
     }
 
     function refreshCounters() {
-        let remainder = parseFloat(startingCashInput.value) - parseFloat(spendings.total)
-        // remainder = !remainder ? (0 - spendings.total) : remainder
-        totalSpendingsSpan.innerHTML = spendings.total.toFixed(2)
-        remainderSpan.innerHTML = remainder.toFixed(2)
-        changeRemainderWrapperClass()
-        
         spendingsLowSpan.innerHTML = spendings.low.toFixed(2)
         spendingsMediumSpan.innerHTML = spendings.medium.toFixed(2)
         spendingsHighSpan.innerHTML = spendings.high.toFixed(2)
+        totalSpendingsSpan.innerHTML = spendings.total.toFixed(2)
+
+        let remainder = parseFloat(startingCashInput.value) - parseFloat(spendings.total)
+        remainder = !remainder ? (0 - spendings.total) : remainder
+        remainderSpan.innerHTML = remainder.toFixed(2)
+        changeRemainderWrapperClass()
     }
 
     function refreshSpendings() {
