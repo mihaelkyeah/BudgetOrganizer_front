@@ -1,0 +1,35 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "name": "A Thing You Need",
+            "price": 200,
+            "priority": "high"
+        },
+        {
+            "id": 2,
+            "sarasa": "Sarasa",
+            "eeee": "eeee",
+            "asdasda": "asdasda"
+        },
+        {
+            "id": 3,
+            "sarasa": "lorem input",
+            "eeee": "lorem input",
+            "asdasda": "lorem input"
+        },
+        {
+            "id": 4,
+            "sarasa": "Lorem Ipsum",
+            "eeee": "Lorem Ipsum",
+            "asdasda": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+            "id": 5,
+            "thing": "thing",
+            "stuff": "stuff",
+            "property": "value"
+        }
+    ],
+    "startingCash": 5000
+}

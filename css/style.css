@@ -12,7 +12,7 @@ body {
 }
 .jsonFileHandler-container, .jsonFileHandler-dialogue { display: flex }
 .jsonFileHandler-container {
-    z-index: 1000;
+    z-index: 2000;
     background: rgba(0,0,0,0.5);
     width: 100vw;
     height: 100vh;
@@ -21,7 +21,8 @@ body {
     position: absolute;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 6em;
 }
 .jsonFileHandler-dialogue {
     background: rgb(249,249,249);

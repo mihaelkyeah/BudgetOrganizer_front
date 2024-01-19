@@ -2,6 +2,9 @@
 
 window.addEventListener("load", () => {
 
+    /* MISC */
+    let timeOut = 750
+
     /* MOCK DATA STRUCTURE BEFORE BACKEND FUNCTIONALITY IS APPLIED */
     let items = []
     let startingCash = 0
@@ -83,6 +86,20 @@ window.addEventListener("load", () => {
             refreshSpendings()
             refreshCounters()
             refreshTable()
+        }
+
+        function verifyFields(json) {
+            let i = 0
+
+            if(!json["startingCash"] || parseFloat(json["startingCash"]) === NaN)
+                throw("No valid startingCash value in collection.")
+
+            while(i < json["items"].length) {
+                if(!json["items"][i]["name"] || !json["items"][i]["price"] || !json["items"][i]["priority"])
+                    throw("Invalid item in collection.")
+                else
+                    i++
+            }
         }
 
         function refreshStartingCash() {
@@ -276,35 +293,54 @@ window.addEventListener("load", () => {
             // reader.onload = logFile // ONLY WHILE IN DEVELOPMENT
             reader.onload = function(event) {
                 // Cosmetic loading screen
-                showLoader("Reading budget file...")
-                setTimeout(1000)
-
-                let json = loadBudget(event)
-
-                items = json["items"]
-                currentIndex = json["items"].length
-                startingCash = json["startingCash"]
-                startingCashInput.value = startingCash
-
-                hideLoader()
                 document.querySelector("#dismissJsonUploadModal").click()
-                refreshStatus()
+                showLoader("Reading budget file...")
+                setTimeout(() => {
+                    let json = loadBudget(event)
+
+                    // Verify that the JSON has the expected structure
+                    try { verifyFields(json) } catch(e) {
+                        hideLoader()
+                        document.querySelector("#btn-invalidFileModalTrigger").click()
+                        document.querySelector("#dismissInvalidFileModal").addEventListener("click", () => {
+                            document.querySelector("#btn-loadBudget").click()
+                        })
+                        return
+                    }
+
+                    // Continue with the function
+                    hideLoader()
+
+                    items = json["items"]
+                    currentIndex = json["items"].length
+                    startingCashInput.value = json["startingCash"]
+                    // startingCashInput.value = startingCash
+
+                    // Once everything is in place, refresh status
+                    refreshStatus()
+                }, timeOut)
+                
             } // ONLY WHILE IN PRODUCTION
 
             // Read the file
             reader.readAsText(uploadFile.files[0])
         })
 
-        downloadButton.addEventListener("click", () => {
-            showLoader("Preparing budget file for export...")
-            setTimeout(1000)
+        document.querySelector("#btn-saveBudget").addEventListener("click", (event) => {
+            document.querySelector("#modal-saveBudget").setAttribute("hidden", true)
 
+            showLoader("Preparing budget file for export...")
+
+            setTimeout(() => {
+                document.querySelector("#modal-saveBudget").removeAttribute("hidden")
+                hideLoader()
+            }, timeOut)
+        })
+
+        downloadButton.addEventListener("click", () => {
             saveBudget({
                 "startingCash": startingCash,
                 "items": items
             })
-
-            hideLoader()
-            refreshStatus()
         })
 })
