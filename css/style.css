@@ -4,11 +4,37 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
-
 .alpha-container, form.alpha-form {
     background: rgba(255,255,255,0.5)
 }
-
 #columnContainer {
     height: 100vh
+}
+.jsonFileHandler-container, .jsonFileHandler-dialogue { display: flex }
+.jsonFileHandler-container {
+    z-index: 1000;
+    background: rgba(0,0,0,0.5);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: absolute;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.jsonFileHandler-dialogue {
+    background: rgb(249,249,249);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+    border-radius: 1em;
+}
+.jsonFileHandler-heading {
+    margin-bottom: 1em;
+}
+body.dialogueOpen {
+    overflow-x: hidden;
+    overflow-y: hidden;
 }

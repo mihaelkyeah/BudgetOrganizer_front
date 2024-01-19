@@ -1,0 +1,65 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "name": "Rent",
+            "price": 3000,
+            "priority": "high"
+        },
+        {
+            "id": 2,
+            "name": "Headphones",
+            "price": 100,
+            "priority": "low"
+        },
+        {
+            "id": 3,
+            "name": "Cereal",
+            "price": 21.35,
+            "priority": "medium"
+        },
+        {
+            "id": 4,
+            "name": "Glasses",
+            "price": 50,
+            "priority": "high"
+        },
+        {
+            "id": 5,
+            "name": "Car",
+            "price": 400,
+            "priority": "medium"
+        },
+        {
+            "id": 6,
+            "name": "Computer",
+            "price": 299.99,
+            "priority": "high"
+        },
+        {
+            "id": 7,
+            "name": "Toothbrush",
+            "price": 1.50,
+            "priority": "high"
+        },
+        {
+            "id": 8,
+            "name": "Dental floss",
+            "price": 4.30,
+            "priority": "high"
+        },
+        {
+            "id": 9,
+            "name": "Soap",
+            "price": 2,
+            "priority": "high"
+        },
+        {
+            "id": 10,
+            "name": "Ice cream",
+            "price": 100,
+            "priority": "low"
+        }
+    ],
+    "startingCash": 5000
+}

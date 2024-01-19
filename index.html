@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="img/ico/pifmgr_0010.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
     <title>Budget Organizer</title>
 </head>
 <body>
@@ -16,6 +17,14 @@
             <div class="col-md-11 col-sm-12 mx-0 my-2 p-3 alpha-container rounded-4">
 
                 <h1 class="text-center fw-bold m-0 pb-3">Budget Organizer</h1>
+                <div class="row mx-0 mt-1 mb-2">
+                    <div class="col-md-6 col-sm-12 mb-md-0 mb-sm-1 d-flex flex-column align-items-center">
+                        <button type="button" id="btn-loadBudget" class="btn btn-success w-50 fs-5" data-bs-toggle="modal" data-bs-target="#modal-loadBudget"><i class="bi bi-upload"></i>&nbsp;&nbsp;Load Budget</button>
+                    </div>
+                    <div class="col-md-6 col-sm-12 mb-md-0 d-flex flex-column align-items-center">
+                        <button type="button" id="btn-saveBudget" class="btn btn-danger w-50 fs-5" data-bs-toggle="modal" data-bs-target="#modal-saveBudget"><i class="bi bi-floppy-fill"></i>&nbsp;&nbsp;Save Budget</button>
+                    </div>
+                </div>
                 <div class="row m-0 px-0 py-2 justify-content-center align-items-center">
                     <div class="col-md-3 col-sm-6 d-flex flex-row justify-content-end">
                         <div class="d-flex flex-column w-100">
@@ -51,15 +60,15 @@
                             </select>
                         </div>
                 
-                        <input type="submit" class="btn btn-info fw-bold col-md-3 col-sm-12 mt-0 mb-3" value="Add">
+                        <input type="submit" class="btn btn-primary fw-bold col-md-3 col-sm-12 mt-0 mb-3" value="Add">
                     </form>
 
                 </div>
-                <div class="row m-0 px-0 py-0 justify-content-center align-items-stretch">
+                <div class="row m-0 px-0 py-0 justify-content-center align-items-stretch" style="min-height: 14em">
 
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-6 col-sm-12" style="height: 100%">
                         <h5 class="fw-bold text-center">Spendings</h5>
-                        <div class="d-flex flex-row justify-content-between align-items-stretch m-0 p-0 w-100">
+                        <div class="d-flex flex-row justify-content-between align-items-stretch m-0 p-0 w-100" style="height: 45%">
                             <div class="mb-1 alert alert-danger p-3" style="width: 33%">
                                 <h6 class="fw-bold text-center text-decoration-underline">Low</h6>
                                 <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-low">n/a</span></p>
@@ -73,7 +82,7 @@
                                 <p class="fs-5 m-0 fw-bold text-center">$<span id="spendings-high">n/a</span></p>
                             </div>
                         </div>
-                        <div class="alert alert-primary my-0 col-12" style="height: 45%">
+                        <div class="alert alert-primary my-0 col-12" style="height: 55%">
                             <h6 class="fw-bold text-center pt-3">Total spendings:</h6>
                             <p class="fs-4 m-0 fw-bold text-center pb-3">$<span id="total-spendings">n/a</span></p>
                         </div>
@@ -81,7 +90,7 @@
 
                     <div class="col-md-6 col-sm-12">
                         <h5 class="fw-bold text-center">Items</h5>
-                        <div class="bg-white rounded-3 px-md-3 pb-md-2 p-sm-0 m-0" style="min-height: 82.5%">
+                        <div class="bg-white rounded-3 px-md-3 pb-md-2 p-sm-0 m-0" style="min-height: 14em">
                             <table class="table mx-0" style="height: 100%">
                                 <thead>
                                     <th class="col-5">Item</th>
@@ -128,7 +137,80 @@
         </footer>
     </div>
 
+    <!-- MODALS -->
+    <div class="modal fade" id="modal-loadBudget" tabindex="-1" aria-labelledby="modal-loadBudget-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-loadBudget-label">Load Budget</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Select the file you want to upload:</p>
+                    <form id="jsonUploadForm" class="form" action="" method="POST">
+                        <!-- <label for="jsonFileInput">Budget file (JSON):</label> -->
+                        <input type="file" id="jsonFileInput" class="form-control" accept=".json">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <button type="button" id="jsonUploadButton" class="btn btn-primary">Upload File</button>
+                    <button type="button" id="dismissJsonUploadModal" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-saveBudget" tabindex="-1" aria-labelledby="modal-saveBudget-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-saveBudget-label">Save Budget</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>JSON file ready. Click the <strong>Download File</strong> button to save your budget to your Downloads folder.</p>
+                    <p><small>Or right-click the <strong>Download File</strong> button and select <span class="text-decoration-underline">Save Link As...</span></small></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" id="jsonDownloadButton">Download File</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-invalidFile" tabindex="-1" aria-labelledby="modal-invalidFile-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-invalidFile-label">Load Budget</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Invalid or null file. Please select a valid JSON file to upload or dismiss this form.
+                </div>
+                <div class="modal-footer border-none">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="dismissInvalidFileModal">OK</button>
+                    <!-- <a href="#" class="btn btn-primary" id="jsonDownloadButton">Download File</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <button hidden aria-hidden="true" type="button" id="btn-invalidFileModalTrigger" data-bs-toggle="modal" data-bs-target="#modal-invalidFile"></button>
+
+    <!--
+    <div class="jsonFileHandler-container">
+        <div class="jsonFileHandler-dialogue">
+            <h5 id="jsonFileHandler-heading">Reading JSON file...</h5>
+            <div class="lds-dual-ring"></div>
+        </div>
+    </div>
+    -->
+
+    <button hidden aria-hidden="true" id="hiddenRefreshStatus"></button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="js/jsonDataHandler.js"></script>
+    <script src="js/loaders.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
